@@ -7,35 +7,46 @@
 <body>
 
 	<div th:fragment="content"  xmlns:th="http://www.thymeleaf.org" th:remove="tag" >
-		<form id="project" name="project" class="form-horizontal" th:action="@{/new-project}" th:object="${project}" method="post">			
+		<form id="project" name="project" class="form-horizontal" th:action="@{/new-project}" th:object="${project}" method="post">		
 			<th:block th:with="attribute=projectName">
 				<label th:for="${attribute}">Project Name: </label>
 				<input th:id="${attribute}" th:field="*{__${attribute}__}" type="text"  placeholder="Please enter a project name"/>
-				<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}"></span>
+				<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}">Field Error</span>
 			</th:block>
 			<br>
 			
 			<th:block th:with="attribute=projectDescription">
 				<label th:for="${attribute}">Project Description: </label>
 				<input th:id="${attribute}" th:field="*{__${attribute}__}" type="text"  placeholder="Please enter a project description"/>
-				<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}"></span>
+				<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}">Field Error</span>
 			</th:block>
 			<br>
 			
 			<br>
 			
+			<th:block th:with="attribute=projectUnit">
+				<label th:for="${attribute}">Select Unit: </label>
+				<select th:id="${attribute}" th:list="${attribute}" th:field="*{projectUnit}" onchange="setUnit.click()"  class="chosen form-control">
+					<!--  <option th:value="0" text="Please Select" selected disabled hidden>Please Select</option>-->
+					<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
+					<option th:each="unit : ${unitList}" th:value="${{unit}}" th:id="${{unit}}" th:text=${unit.unitName}></option>
+				</select>
+			</th:block>
+			
+			<input type="hidden" th:field="*{projectUnit}" th:value="*{projectUnit}">
+			
 			<div th:each="assessment, a: *{projectAssessments}">
 				<th:block th:with="attribute=projectAssessments[__${a.index}__].assessmentName">
 	 				<label th:for="attribute" >Assessment Name: </label>
 					<input th:id="attribute" th:field="*{__${attribute}__}" type="text" placeholder="Please enter an assessment name"/>
-					<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}"></span>
+					<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}">Field Error</span>
 				</th:block>
 				<br>
 				
 				<th:block th:with="attribute=projectAssessments[__${a.index}__].assessmentDescription">
 	 				<label th:for="attribute" >Assessment Description: </label>
 					<input th:id="attribute" th:field="*{__${attribute}__}" type="text" placeholder="Please enter an assessment description"/>
-					<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}"></span>
+					<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}">Field Error</span>
 				</th:block>
 				
 				<button  name="removeAssessment" type="submit" th:value="${a.index}">Remove Assessment</button>

@@ -8,6 +8,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Entity
 public class Assessment {
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "assessment_gen")
@@ -16,8 +20,8 @@ public class Assessment {
 	private String assessmentName;
 	private String assessmentDescription;
 	
-	@ManyToOne
-	@JoinColumn(name="project_id")
+	@ManyToOne @JsonIgnore
+	@JoinColumn(name = "project_id", nullable = false)
 	private Project assessmentProject;
 
 	
@@ -53,4 +57,14 @@ public class Assessment {
 		this.assessmentDescription = assessmentDescription;
 	}
 
+	public String toString() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String str = super.toString();
+		try {
+			str = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return str;
+	}
 }
