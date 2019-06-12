@@ -59,11 +59,5 @@ public class NewProjectController {
 		project.getProjectAssessments().remove(index);
 	    return newProjectFormFragment;
 	}
-
-//	
-//	@PostMapping("add_assessment")
-//	public String addAssessment(Project project) {
-//		project.addAssessment(new Assessment());
-//	    return projectForm;
-//	}
+	
 }
