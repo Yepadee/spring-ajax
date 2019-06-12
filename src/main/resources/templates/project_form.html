@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>New Project Form</title>
+</head>
+<body>
+
+	<div th:fragment="content"  xmlns:th="http://www.thymeleaf.org" th:remove="tag" >
+		<form id="project" name="project" class="form-horizontal" th:action="@{/new-project}" th:object="${project}" method="post">			
+			<th:block th:with="attribute=projectName">
+				<label th:for="${attribute}">Project Name: </label>
+				<input th:id="${attribute}" th:field="*{__${attribute}__}" type="text"  placeholder="Please enter a project name"/>
+				<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}"></span>
+			</th:block>
+			<br>
+			
+			<th:block th:with="attribute=projectDescription">
+				<label th:for="${attribute}">Project Description: </label>
+				<input th:id="${attribute}" th:field="*{__${attribute}__}" type="text"  placeholder="Please enter a project description"/>
+				<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}"></span>
+			</th:block>
+			<br>
+			
+			<br>
+			
+			<div th:each="assessment, a: *{projectAssessments}">
+				<th:block th:with="attribute=projectAssessments[__${a.index}__].assessmentName">
+	 				<label th:for="attribute" >Assessment Name: </label>
+					<input th:id="attribute" th:field="*{__${attribute}__}" type="text" placeholder="Please enter an assessment name"/>
+					<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}"></span>
+				</th:block>
+				<br>
+				
+				<th:block th:with="attribute=projectAssessments[__${a.index}__].assessmentDescription">
+	 				<label th:for="attribute" >Assessment Description: </label>
+					<input th:id="attribute" th:field="*{__${attribute}__}" type="text" placeholder="Please enter an assessment description"/>
+					<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}"></span>
+				</th:block>
+				
+				<button  name="removeAssessment" type="submit" th:value="${a.index}">Remove Assessment</button>
+				<br>
+				<br>
+				
+			</div>
+			<br>
+			
+			<button id="addAssessment" name="addAssessment" type="submit">Add Assessment</button>
+			<button id="saveProject" name="saveProject" type="submit">Save Project</button>
+		</form>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script>
+
+			$(document).ready(function() {
+				var clkBtn = "";
+				$('button[type="submit"]').click(function(evt) {
+					clkBtn = evt.target;
+				});
+
+				(function($) {
+					var $form = $('#project');
+					$form.on('submit', function(e) {
+						e.preventDefault();
+						$.ajax({
+							url : $form.attr('action'),
+							type : 'post',
+							data : $form.serialize() + '&' + clkBtn.name + '=' + clkBtn.value,
+							success : function(response) {
+								$form.replaceWith(response);
+							}
+						});
+					})
+				}(jQuery));
+			});
+		</script>
+	</div>
+	
+	<br>
+	<a href="/projects">View Projects</a>
+
+</body>
+</html>

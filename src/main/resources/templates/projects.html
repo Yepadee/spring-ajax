@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Projects</title>
+    </head>
+
+    <body>
+        <!--  <button id="update"> update1 </button> -->
+	
+        <div th:each="project: ${projects}">
+            <span th:text="${project.projectName}"></span>
+            <span th:text="${project.projectDescription}"></span>
+            <div th:each="assessment : ${project.projectAssessments}">
+	            <span th:text="${assessment.assessmentName}"></span>
+	            <span th:text="${assessment.assessmentDescription}"></span>
+            </div>
+            <br>
+            <br>
+        </div>
+        
+        <a href="/new-project">Make Projects</a>
+
+    </body>
+</html>
