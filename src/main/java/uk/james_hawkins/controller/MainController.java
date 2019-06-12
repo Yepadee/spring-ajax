@@ -25,9 +25,6 @@ public class MainController {
 	@GetMapping("/projects")
 	public String getProjects(Model model) {
 		List<Project> projects = projectService.getAllProjects();
-		for (Project p : projects) {
-			System.out.println(p.getProjectAssessments().size());
-		}
 		model.addAttribute("projects", projects);
 		return projectPage;
 	}
