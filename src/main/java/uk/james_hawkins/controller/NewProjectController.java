@@ -45,7 +45,6 @@ public class NewProjectController {
 	    	return newProjectFormFragment;
 	    }
 		
-		
 	}
 	
 	@PostMapping(params={"addAssessment"})

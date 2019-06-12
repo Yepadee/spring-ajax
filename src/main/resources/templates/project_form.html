@@ -47,32 +47,35 @@
 			
 			<button id="addAssessment" name="addAssessment" type="submit">Add Assessment</button>
 			<button id="saveProject" name="saveProject" type="submit">Save Project</button>
-		</form>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<script>
-
-			$(document).ready(function() {
-				var clkBtn = "";
-				$('button[type="submit"]').click(function(evt) {
-					clkBtn = evt.target;
+			
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+			<script>
+	
+				$(document).ready(function() {
+					var clkBtn = "";
+					$('button[type="submit"]').click(function(evt) {
+						clkBtn = evt.target;
+					});
+	
+					(function($) {
+						var $form = $('#project');
+						$form.on('submit', function(e) {
+							e.preventDefault();
+							$.ajax({
+								url : $form.attr('action'),
+								type : 'post',
+								data : $form.serialize() + '&' + clkBtn.name + '=' + clkBtn.value,
+								success : function(response) {
+									$form.replaceWith(response);
+								}
+							});
+						})
+					}(jQuery));
 				});
+			</script>
+			
+		</form>
 
-				(function($) {
-					var $form = $('#project');
-					$form.on('submit', function(e) {
-						e.preventDefault();
-						$.ajax({
-							url : $form.attr('action'),
-							type : 'post',
-							data : $form.serialize() + '&' + clkBtn.name + '=' + clkBtn.value,
-							success : function(response) {
-								$form.replaceWith(response);
-							}
-						});
-					})
-				}(jQuery));
-			});
-		</script>
 	</div>
 	
 	<br>
