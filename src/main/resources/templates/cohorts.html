@@ -11,11 +11,12 @@
         <div th:each="cohort: ${cohorts}">
             <span th:text="${cohort.cohortYear}"></span>
             <span th:text="${cohort.cohortUnit.unitName}"></span>
+            <a th:href="@{cohorts/edit/{cohortId}(cohortId=${cohort.cohortId})}">Edit</a>
             <br>
             <br>
         </div>
         
-        <a href="/new-cohort">New Cohort</a>
+        <a href="/cohorts/add">New Cohort</a>
 
     </body>
 </html>

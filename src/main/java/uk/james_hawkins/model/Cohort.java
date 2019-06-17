@@ -51,7 +51,7 @@ public class Cohort {
 	@ManyToMany
 	private List<Staff> cohortStaff = new ArrayList<>();
 	
-	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "studentCohorts")
+	@ManyToMany
 	private List<Student> cohortMembers = new ArrayList<>();
 	
 	public Cohort() {}

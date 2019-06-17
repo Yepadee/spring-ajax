@@ -25,7 +25,7 @@ public class MainController {
 	
 	@GetMapping
 	public String main() {
-		return "redirect:/new-project";
+		return "redirect:/projects";
 	}
 	
 	@GetMapping("/projects")

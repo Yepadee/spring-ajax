@@ -7,7 +7,9 @@
 <body>
 
 <div th:fragment="form"  xmlns:th="http://www.thymeleaf.org" th:remove="tag" >
-		<form id="form-id" name="cohort" class="form-horizontal" th:action="@{/new-cohort}" th:object="${cohort}" method="post">		
+		<form id="form-id" name="cohort" class="form-horizontal" th:action="@{/cohorts}" th:object="${cohort}" method="post">
+			<input type="hidden" th:field="*{cohortId}" th:value="*{cohortId}">
+				
 			<th:block th:with="attribute=cohortYear">
 				<label th:for="${attribute}">Cohort Year: </label>
 				<input th:id="${attribute}" th:field="*{__${attribute}__}" type="text" placeholder="Please enter a cohort year"/>
@@ -88,6 +90,7 @@
 		</form>
 
 	</div>
-
+	<br>
+	<a href="/cohorts">View Cohorts</a>
 </body>
 </html>

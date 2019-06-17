@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,8 +22,8 @@ import uk.james_hawkins.service.CohortService;
 import uk.james_hawkins.service.ProjectService;
 
 @Controller
-@RequestMapping("new-project")
-public class NewProjectController {
+@RequestMapping("projects")
+public class ProjectController {
 	private String newProjectPage = "new_project";
 	private String newProjectFormFragment = newProjectPage + " :: form";
 	
@@ -32,10 +33,16 @@ public class NewProjectController {
 	@Autowired
 	private CohortService cohortService;
 
-	@GetMapping
+	@GetMapping("add")
 	public String newProject(Model model) {
 		Project project = new Project();
 		model.addAttribute("project", project);
+		return newProjectPage;
+	}
+	
+	@GetMapping("edit/{projectId}")
+	public String newProject(@PathVariable Long projectId, Model model) {
+		model.addAttribute("project", projectService.getProject(projectId));
 		return newProjectPage;
 	}
 

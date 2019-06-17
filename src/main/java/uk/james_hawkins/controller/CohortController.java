@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,10 +27,8 @@ import uk.james_hawkins.service.user.StudentService;
 import uk.james_hawkins.service.user.UserService;
 
 @Controller
-@RequestMapping("new-cohort")
-public class NewCohortController {
-	@Autowired
-	private UserService userService;
+@RequestMapping("cohorts")
+public class CohortController {
 	
 	@Autowired
 	private StudentService studentService;
@@ -47,16 +46,22 @@ public class NewCohortController {
 	private String newCohortPage = "new_cohort";
 	private String newCohortFormFragment = newCohortPage + " :: form";
 	
-	@GetMapping
+	@GetMapping("add")
 	public String newCohort(Model model) {
 		Cohort cohort = new Cohort();
 		model.addAttribute("cohort", cohort);
 		return newCohortPage;
 	}
 	
+	@GetMapping("edit/{cohortId}")
+	public String editCohort(@PathVariable Long cohortId, Model model) {
+		model.addAttribute("cohort", cohortService.getCohort(cohortId));
+		return newCohortPage;
+	}
+	
 	@PostMapping
 	public String saveCohort(@Valid @ModelAttribute Cohort cohort, BindingResult result, Model model) {
-		if (cohortService.exists(cohort)) {
+		if (cohortService.exists(cohort) && cohort.getCohortId() == null) {
 			result.rejectValue("cohortYear", "error.cohortYear", "Cohort already exists for this year");
 		}
 		
@@ -76,8 +81,8 @@ public class NewCohortController {
 	}
 	
 	@ModelAttribute("studentList")
-	public List<User> getStudentList() {
-		return userService.getAllUsers();
+	public List<Student> getStudentList() {
+		return studentService.getAllStudents();
 	}
 	
 	@ModelAttribute("staffList")

@@ -7,7 +7,9 @@
 <body>
 
 	<div th:fragment="form"  xmlns:th="http://www.thymeleaf.org" th:remove="tag" >
-		<form id="form-id" name="project" class="form-horizontal" th:action="@{/new-project}" th:object="${project}" method="post">		
+		<form id="form-id" name="project" class="form-horizontal" th:action="@{/projects}" th:object="${project}" method="post">
+			<input type="hidden" th:field="*{projectId}" th:value="*{projectId}">
+			
 			<th:block th:with="attribute=projectName">
 				<label th:for="${attribute}">Project Name: </label>
 				<input th:id="${attribute}" th:field="*{__${attribute}__}" type="text"  placeholder="Please enter a project name"/>
@@ -86,7 +88,7 @@
 			</script>
 			
 		</form>
-
+		
 	</div>
 	
 	<br>

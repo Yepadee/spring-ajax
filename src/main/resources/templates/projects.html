@@ -15,11 +15,12 @@
 	            <span th:text="${assessment.assessmentName}"></span>
 	            <span th:text="${assessment.assessmentDescription}"></span>
             </div>
+            <a th:href="@{projects/edit/{projectId}(projectId=${project.projectId})}">Edit</a>
             <br>
             <br>
         </div>
         
-        <a href="/new-project">Make Projects</a>
+        <a href="/projects/add">Make Projects</a>
 
     </body>
 </html>
