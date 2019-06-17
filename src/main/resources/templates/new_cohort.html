@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>New Cohort</title>
+</head>
+<body>
+
+<div th:fragment="form"  xmlns:th="http://www.thymeleaf.org" th:remove="tag" >
+		<form id="form-id" name="cohort" class="form-horizontal" th:action="@{/new-cohort}" th:object="${cohort}" method="post">		
+			<th:block th:with="attribute=cohortYear">
+				<label th:for="${attribute}">Cohort Year: </label>
+				<input th:id="${attribute}" th:field="*{__${attribute}__}" type="text" placeholder="Please enter a cohort year"/>
+				<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}">Field Error</span>
+			</th:block>
+			<br>
+			
+			<th:block th:with="attribute=cohortUnit">
+				<label th:for="${attribute}">Select Unit: </label>
+				<select th:id="${attribute}" th:field="*{__${attribute}__}">
+					<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
+					<option th:each="unit : ${unitList}" th:value="${{unit}}" th:id="${{unit}}" th:text=${unit.unitName}></option>
+				</select>
+				<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}">Field Error</span>
+			</th:block>
+			<br>
+			
+			<th:block th:with="attribute=cohortUnitDirector">
+				<label th:for="${attribute}">Select Unit Director: </label>
+				<select th:id="${attribute}" th:field="*{__${attribute}__}">
+					<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
+					<option th:each="staff : ${staffList}" th:value="${{staff}}" th:id="${{staff}}" th:text=${staff.userName}></option>
+				</select>
+				<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}">Field Error</span>
+			</th:block>
+			<br>
+			
+			<th:block th:with="attribute=cohortStaff">
+				<label th:for="${attribute}">Select Staff: </label>
+				<select th:id="${attribute}" th:field="*{__${attribute}__}" multiple="multiple">
+					<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
+					<option th:each="staff : ${staffList}" th:value="${{staff}}" th:id="${{staff}}" th:text=${staff.userName}></option>
+				</select>
+				<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}">Field Error</span>
+			</th:block>
+			<br>
+			
+			<th:block th:with="attribute=cohortMembers">
+				<label th:for="${attribute}">Select Members: </label>
+				<select th:id="${attribute}" th:field="*{__${attribute}__}" multiple="multiple">
+					<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
+					<option th:each="student : ${studentList}" th:value="${{student}}" th:id="${{student}}" th:text=${student.userName}></option>
+				</select>
+				<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}">Field Error</span>
+			</th:block>
+			<br>
+			
+			<button id="saveCohort" name="saveCohort" type="submit">Save Cohort</button>
+
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+			<script>
+				$(document).ready(
+						function() {
+							var clkBtn = "";
+							$('button[type="submit"]').click(function(evt) {
+								clkBtn = evt.target;
+							});
+
+							(function($) {
+								var $form = $('#form-id');
+								$form.on('submit', function(e) {
+									e.preventDefault();
+									$.ajax({
+										url : $form.attr('action'),
+										type : 'post',
+										data : $form.serialize() + '&'
+												+ clkBtn.name + '='
+												+ clkBtn.value,
+										success : function(response) {
+											$form.replaceWith(response);
+										}
+									});
+								})
+							}(jQuery));
+						});
+			</script>
+			
+		</form>
+
+	</div>
+
+</body>
+</html>

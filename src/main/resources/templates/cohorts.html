@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Projects</title>
+    </head>
+
+    <body>
+        <!--  <button id="update"> update1 </button> -->
+	
+        <div th:each="cohort: ${cohorts}">
+            <span th:text="${cohort.cohortYear}"></span>
+            <span th:text="${cohort.cohortUnit.unitName}"></span>
+            <br>
+            <br>
+        </div>
+        
+        <a href="/new-cohort">New Cohort</a>
+
+    </body>
+</html>

@@ -15,13 +15,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Entity
 public class Unit {
-	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "unit_gen")
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long unitId;
 	
 	private String unitName;
 	private String unitCode;
-	//private UnitDirector unitDirector;
-	//private List<Staff> staff;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cohortUnit")
 	private List<Cohort> unitCohorts = new ArrayList<>();
@@ -75,5 +73,5 @@ public class Unit {
 		}
 		return str;
 	}
-	
+
 }

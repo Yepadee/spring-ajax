@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>New Project Form</title>
+<title>New Project</title>
 </head>
 <body>
 
-	<div th:fragment="content"  xmlns:th="http://www.thymeleaf.org" th:remove="tag" >
-		<form id="project" name="project" class="form-horizontal" th:action="@{/new-project}" th:object="${project}" method="post">		
+	<div th:fragment="form"  xmlns:th="http://www.thymeleaf.org" th:remove="tag" >
+		<form id="form-id" name="project" class="form-horizontal" th:action="@{/new-project}" th:object="${project}" method="post">		
 			<th:block th:with="attribute=projectName">
 				<label th:for="${attribute}">Project Name: </label>
 				<input th:id="${attribute}" th:field="*{__${attribute}__}" type="text"  placeholder="Please enter a project name"/>
@@ -24,16 +24,16 @@
 			
 			<br>
 			
-			<th:block th:with="attribute=projectUnit">
-				<label th:for="${attribute}">Select Unit: </label>
-				<select th:id="${attribute}" th:list="${attribute}" th:field="*{projectUnit}" onchange="setUnit.click()"  class="chosen form-control">
+			<th:block th:with="attribute=projectCohort">
+				<label th:for="${attribute}">Select Cohort: </label>
+				<select th:id="${attribute}" th:field="*{__${attribute}__}" onchange="setCohort.click()">
 					<!--  <option th:value="0" text="Please Select" selected disabled hidden>Please Select</option>-->
 					<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
-					<option th:each="unit : ${unitList}" th:value="${{unit}}" th:id="${{unit}}" th:text=${unit.unitName}></option>
+					<option th:each="cohort : ${cohortList}" th:value="${{cohort}}" th:id="${{cohort}}" th:text="${cohort.cohortUnit.unitName + ' ' + cohort.cohortYear}"></option>
 				</select>
 			</th:block>
 			
-			<input type="hidden" th:field="*{projectUnit}" th:value="*{projectUnit}">
+<!-- 			<button style="display: none;" type="submit" id="setCohort" name="setCohort">Set Cohort</button> -->
 			
 			<div th:each="assessment, a: *{projectAssessments}">
 				<th:block th:with="attribute=projectAssessments[__${a.index}__].assessmentName">
@@ -69,7 +69,7 @@
 					});
 	
 					(function($) {
-						var $form = $('#project');
+						var $form = $('#form-id');
 						$form.on('submit', function(e) {
 							e.preventDefault();
 							$.ajax({

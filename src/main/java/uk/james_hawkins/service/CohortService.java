@@ -16,13 +16,17 @@ public class CohortService {
 	private CohortRepository cohortRepository;
 	
 	public List<Cohort> getAllCohorts() {
-		List<Cohort> units = new ArrayList<>();
-		cohortRepository.findAll().forEach(units::add);
-		return units;
+		List<Cohort> cohorts = new ArrayList<>();
+		cohortRepository.findAll().forEach(cohorts::add);
+		return cohorts;
 	}
 		
-	public Long addCohort(Cohort unit) {
-		return cohortRepository.save(unit).getCohortId();
+	public void addCohort(Cohort cohort) {
+		cohortRepository.save(cohort);
+	}
+	
+	public Boolean exists(Cohort cohort) {
+		return cohortRepository.exists(cohort.getCohortUnit(), cohort.getCohortYear());
 	}
 
 }

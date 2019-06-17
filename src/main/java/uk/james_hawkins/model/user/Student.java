@@ -1,5 +1,40 @@
 package uk.james_hawkins.model.user;
 
-public class Student {
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import uk.james_hawkins.model.Cohort;
+
+@DiscriminatorValue("student")
+@Entity
+public class Student extends User {
+	
+	@ManyToMany
+	public List<Cohort> studentCohorts = new ArrayList<>();
+
+	public List<Cohort> getStudentCohorts() {
+		return studentCohorts;
+	}
+
+	public void setStudentCohorts(List<Cohort> studentCohorts) {
+		this.studentCohorts = studentCohorts;
+	}
+
+	public String toString() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String str = super.toString();
+		try {
+			str = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return str;
+	}
 }

@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Entity
 public class Assessment {
-	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "assessment_gen")
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long assessmentId;
 	@Size(min = 1, message = "Assessment name cannot be blank!")
 	private String assessmentName;
