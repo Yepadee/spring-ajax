@@ -35,9 +35,11 @@
 				</select>
 			</th:block>
 			
-<!-- 			<button style="display: none;" type="submit" id="setCohort" name="setCohort">Set Cohort</button> -->
+			<button style="display: none;" type="submit" id="setCohort" name="setCohort">Set Cohort</button>
 			
 			<div th:each="assessment, a: *{projectAssessments}">
+				<input type="hidden" th:field="*{projectAssessments[__${a.index}__].assessmentId}" th:value="*{projectAssessments[__${a.index}__].assessmentId}">
+			
 				<th:block th:with="attribute=projectAssessments[__${a.index}__].assessmentName">
 	 				<label th:for="attribute" >Assessment Name: </label>
 					<input th:id="attribute" th:field="*{__${attribute}__}" type="text" placeholder="Please enter an assessment name"/>
@@ -50,7 +52,8 @@
 					<input th:id="attribute" th:field="*{__${attribute}__}" type="text" placeholder="Please enter an assessment description"/>
 					<span th:if="${#fields.hasErrors(attribute)}" th:errors="*{__${attribute}__}">Field Error</span>
 				</th:block>
-				
+
+
 				<button  name="removeAssessment" type="submit" th:value="${a.index}">Remove Assessment</button>
 				<br>
 				<br>

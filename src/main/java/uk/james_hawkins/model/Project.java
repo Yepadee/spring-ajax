@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Project {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long projectId;
-	@Size(min = 1, message = "Project name cannot be blank!")
+	@Size(min = 1, message = "Project name cannot be blank")
 	private String projectName;
 	private String projectDescription;
 	

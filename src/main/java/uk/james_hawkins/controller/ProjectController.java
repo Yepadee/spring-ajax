@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.james_hawkins.model.Assessment;
 import uk.james_hawkins.model.Cohort;
 import uk.james_hawkins.model.Project;
+import uk.james_hawkins.model.user.Staff;
 import uk.james_hawkins.service.CohortService;
 import uk.james_hawkins.service.ProjectService;
 
@@ -73,11 +74,10 @@ public class ProjectController {
 	    return newProjectFormFragment;
 	}
 	
-//	@PostMapping(params={"setCohort"})
-//	public String setCohort(@ModelAttribute Project project) {
-//		project.getProjectAssessments().remove(index);
-//	    return newProjectFormFragment;
-//	}
+	@PostMapping(params={"setCohort"})
+	public String setCohort(@ModelAttribute Project project) {
+	    return newProjectFormFragment;
+	}
 	
 	//TODO: refine list via unit/date selection
 	@ModelAttribute("cohortList")
