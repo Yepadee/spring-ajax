@@ -13,6 +13,7 @@ import uk.james_hawkins.model.user.Student;
 import uk.james_hawkins.service.CohortService;
 import uk.james_hawkins.service.UnitService;
 import uk.james_hawkins.service.user.StaffService;
+import uk.james_hawkins.service.user.StudentService;
 import uk.james_hawkins.service.user.UserService;
 
 @SpringBootApplication
@@ -28,6 +29,9 @@ public class SpringAjaxApplication {
 	
 	@Autowired
 	private StaffService staffService;
+	
+	@Autowired
+	private StudentService studentService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringAjaxApplication.class, args);
@@ -75,8 +79,7 @@ public class SpringAjaxApplication {
 		cohort.setCohortUnitDirector(unitDirector);
 		cohort.setCohortUnit(unit);
 		cohort.getCohortStaff().addAll(staffService.getAllStaff());
-		
-		System.out.println(staffService.getAllUsers().size());
+		cohort.getCohortMembers().addAll(studentService.getAllStudents());
 			
 		Cohort cohort1 = new Cohort();
 		cohort1.setCohortYear(2019);

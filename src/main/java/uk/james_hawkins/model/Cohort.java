@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import uk.james_hawkins.model.project.Project;
 import uk.james_hawkins.model.user.Staff;
 import uk.james_hawkins.model.user.Student;
 

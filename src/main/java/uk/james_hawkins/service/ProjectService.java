@@ -7,7 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import uk.james_hawkins.model.Project;
+import uk.james_hawkins.forms.ProjectForm;
+import uk.james_hawkins.model.project.Project;
 import uk.james_hawkins.repository.ProjectRepository;
 
 @Service
@@ -33,6 +34,17 @@ public class ProjectService {
 		
 	public Long addProject(Project project) {
 		return projectRepository.save(project).getProjectId();
+	}
+	
+	public Long addProject(ProjectForm projectForm) {
+    	Project project;
+    	if (projectForm.getProjectId() == null) {
+    		project = new Project();
+    	} else {
+    		project = getProject(projectForm.getProjectId());
+    	}
+    	projectForm.applyChanges(project);
+    	return addProject(project);
 	}
 	
 }

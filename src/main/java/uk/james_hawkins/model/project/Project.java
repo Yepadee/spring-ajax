@@ -1,4 +1,4 @@
-package uk.james_hawkins.model;
+package uk.james_hawkins.model.project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,21 +12,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
-import javax.validation.constraints.Size;
-
+import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import uk.james_hawkins.model.Cohort;
 
 @Entity
 public class Project {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long projectId;
-	@Size(min = 1, message = "Project name cannot be blank")
+	
 	private String projectName;
 	private String projectDescription;
 	
-	@ManyToOne @JsonIgnore
+	
+	@ManyToOne @JsonIgnore	
 	@JoinColumn(name = "cohort_id", nullable = false)
 	private Cohort projectCohort;
 	

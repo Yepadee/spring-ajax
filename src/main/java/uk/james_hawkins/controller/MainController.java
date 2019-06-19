@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import uk.james_hawkins.model.Cohort;
-import uk.james_hawkins.model.Project;
+import uk.james_hawkins.model.project.Project;
 import uk.james_hawkins.service.CohortService;
 import uk.james_hawkins.service.ProjectService;
 
